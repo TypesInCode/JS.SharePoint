@@ -95,9 +95,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <Content Include="ApplicationInsights.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="package.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -106,8 +104,16 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="scripts\ai.0.22.9-build00167.js" />
-    <Content Include="scripts\ai.0.22.9-build00167.min.js" />
+    <Content Include="src\Scripts\ajax.js" />
+    <Content Include="src\Scripts\cachedb.js" />
+    <Content Include="src\Scripts\date.js" />
+    <Content Include="src\Scripts\deferred.js" />
+    <Content Include="src\Scripts\dom.js" />
+    <Content Include="src\Scripts\module.js" />
+    <Content Include="src\Scripts\sp.js" />
+    <Content Include="src\Scripts\spCAML.js" />
+    <Content Include="src\Scripts\spConfig.js" />
+    <Content Include="src\Scripts\spListCache.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
