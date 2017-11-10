@@ -1,24 +1,4 @@
-﻿/* #Module.js
- * Module to manage and load other javascript modules. Exports global
- * module variable. Internal module class is exposed as `module.Module`
- *
- * ####exports
- * `var module = { Module: constructor() }`
- * 
- * **Usage**
- * ```
- * //loads module deployed to the same directory as module.js
- * module.require("other", function(other) {
- *   other.doStuff();
- * });
- * 
- * //defines a module without loading it. Module can later be loaded by name.
- * module.define({ name: "other", url: "/different/location/other.js" });
- * ```
- */
-
-// module start
-var module = (function () {
+﻿var module = (function () {
 
     function appendVersion(url, version) {
         return url + (version ? "?v=" + version : "");
@@ -207,15 +187,6 @@ var module = (function () {
         }
     };
 
-    /** 
-     * ##Class
-     * #####Module: `constructor(options)`
-     * Class providing functionality to load, cache and manage
-     * JavaScript modules
-     * 
-     * **Parameters**  
-     * **`options`** `object` Options variable (unused)
-     */
     function Module() {
         this._moduleCache = {};
         this.version = null;
@@ -225,18 +196,9 @@ var module = (function () {
                             .src.split("module.js")[0];
 
     Module.prototype = {
-        // ######defaultUrl: `get()`
-        // **Returns**  
-        // `string` Default module path
         get defaultUrl() {
             return Module.defaultUrl;
         },
-        // ######define: `function(...moduleReferences)`  
-        // Predefine a module
-        //
-        // **Parameters**  
-        // **`...moduleReference`** `string|{name:string, url:string}` pass one to many 
-        // filenames or moduleReference objects
         define: function (moduleReference) {
             var module = new ModuleRef(this, moduleReference);
             if (!this.isDefined(module))
@@ -254,15 +216,6 @@ var module = (function () {
             
             return cacheM;
         },
-        
-        // ######require: `function(...moduleReferences, function(...modules))`
-        // Load specified modules
-        //
-        // **Parameters**  
-        // **`...moduleReference`** `string|{name:string, url:string}`   
-        // One to many filename or moduleReference objects  
-        // **`callback`** `function(...values)`  
-        // Callback method that receives export values from required modules
         require: function () {
             var args = Array.prototype.slice.call(arguments);
             var callback = args.pop();
