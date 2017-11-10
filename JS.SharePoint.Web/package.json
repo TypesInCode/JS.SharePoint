@@ -1,0 +1,11 @@
+{
+  "name": "JS.SharePoint",
+  "version": "0.0.0",
+  "description": "",
+  "main": "",
+  "author": {
+    "name": "Jay Landrum",
+    "email": "landrumjc@gmail.com"
+  },
+  "dependencies": {}
+}

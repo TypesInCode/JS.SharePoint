@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package dslVersion="1.0.0.0" 
+        Id="19288be3-a568-4e76-8035-45055d545277" 
+        solutionId="19288be3-a568-4e76-8035-45055d545277" 
+        xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel" 
+        name="JS.SharePoint"
+        sharePointProductVersion="15.0">
+</package>
