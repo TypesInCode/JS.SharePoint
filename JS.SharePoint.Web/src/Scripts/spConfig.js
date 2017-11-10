@@ -2,6 +2,16 @@
 //! require("deferred")
 
 var spConfig = (function () {
+
+    var formatRegex = /{(\d+)}/g;
+    function formatStr() {
+        var args = Array.prototype.slice.call(arguments);
+        var baseString = args.shift();
+
+        return baseString.replace(formatRegex, function (match, p1) {
+            return args[p1];
+        });
+    }
     
     function logInfo(message) {
         console.log(message);
@@ -88,13 +98,13 @@ var spConfig = (function () {
 
             var restWeb = listDefinition.rootWeb ? sp.rest().rootWeb : sp.rest().web;
             restWeb.list(listDef.Title).data.then(function () {
-                self.logInfo(GAF.format("List '{0}' already exists", listDef.Title));
+                self.logInfo(formatStr("List '{0}' already exists", listDef.Title));
                 return deferred.resolved();
             }, function () {
-                self.logInfo(GAF.format("Creating list '{0}'", listDef.Title));
+                self.logInfo(formatStr("Creating list '{0}'", listDef.Title));
                 return sp.rest().web.lists.add(listDef);
             }).then(function () {
-                self.logInfo(GAF.format("Adding fields to list '{0}'", listDef.Title));
+                self.logInfo(formatStr("Adding fields to list '{0}'", listDef.Title));
                 var methods = [
                     self.fields.bind(self, listDef, listDefinition.fields),
                     self.lookupFields.bind(self, listDef, listDefinition.lookupFields),
@@ -102,13 +112,13 @@ var spConfig = (function () {
                 ];
                 return deferred.sequence(methods);
             }, function () {
-                self.logError(GAF.format("Error encountered creating list '{0}'", listDef.Title));
+                self.logError(formatStr("Error encountered creating list '{0}'", listDef.Title));
                 def.reject();
             }).then(function () {
-                self.logInfo(GAF.format("Completed adding fields to list '{0}'", listDef.Title));
+                self.logInfo(formatStr("Completed adding fields to list '{0}'", listDef.Title));
                 def.resolve();
             }, function () {
-                self.logError(GAF.format("Error adding fields to list '{0}'", listDef.Title));
+                self.logError(formatStr("Error adding fields to list '{0}'", listDef.Title));
                 def.reject();
             });
 
@@ -139,7 +149,7 @@ var spConfig = (function () {
 
                 def.resolve(newFields);
             }, function () {
-                self.logError(GAF.format("Error requesting fields from list '{0}'", listDef.Title));
+                self.logError(formatStr("Error requesting fields from list '{0}'", listDef.Title));
                 def.reject();
             });
             return def.promise();
@@ -199,14 +209,14 @@ var spConfig = (function () {
                 }
 
                 sp.mergeJSON(newField.__metadata.uri, newField).done(function () {
-                    self.logInfo(GAF.format("Added field '{0}' to list '{1}'", fieldCreationInfo.Title, listDef.Title));
+                    self.logInfo(formatStr("Added field '{0}' to list '{1}'", fieldCreationInfo.Title, listDef.Title));
                     def.resolve();
                 }).fail(function () {
-                    self.logError(GAF.format("Error updating field '{0}'", newField.Title));
+                    self.logError(formatStr("Error updating field '{0}'", newField.Title));
                     def.reject();
                 });
             }).fail(function () {
-                self.logError(GAF.format("Error adding field '{0}' to list '{1}'", fieldCreationInfo.Title, listDef.Title));
+                self.logError(formatStr("Error adding field '{0}' to list '{1}'", fieldCreationInfo.Title, listDef.Title));
                 def.reject();
             });
 
@@ -328,9 +338,9 @@ var spConfig = (function () {
 
             sp.csom.done(function (csom) {
                 csom().site.removeFeature(featureId).done(function () {
-                    self.logInfo(GAF.format("Feature '{0}' deactivated", featureId));
+                    self.logInfo(formatStr("Feature '{0}' deactivated", featureId));
                 }).fail(function () {
-                    self.logError(GAF.format("Error deactivating feature '{0}'", featureId));
+                    self.logError(formatStr("Error deactivating feature '{0}'", featureId));
                 });
             });
 
@@ -347,9 +357,9 @@ var spConfig = (function () {
                 var masterUrl = url + masterpageUrl;
                 sp.csom.done(function (csom) {
                     csom().web.setCustomMasterPage(masterUrl).done(function () {
-                        self.logInfo(GAF.format("Masterpage '{0}' applied", masterpageUrl));
+                        self.logInfo(formatStr("Masterpage '{0}' applied", masterpageUrl));
                     }).fail(function () {
-                        self.logError(GAF.format("Error applying masterpage '{0}'", masterpageUrl));
+                        self.logError(formatStr("Error applying masterpage '{0}'", masterpageUrl));
                     });
                 });
                 def.resolve();
